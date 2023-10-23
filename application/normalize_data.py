@@ -49,5 +49,5 @@ def clear_results():
     else:
         os.mkdir(folder_path)
 
-normalize_data()
 clear_results()
+normalize_data()
