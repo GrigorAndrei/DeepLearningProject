@@ -74,7 +74,6 @@ for model_name, model in models.items():
             best_mse = mse
             best_model = model_name
 
-print(model_accuracies)
 
 # Plot the development of accuracy over 100 passes
 # Plot the development of accuracy over 100 passes
@@ -97,7 +96,7 @@ print(f"The best model is {best_model} with the lowest MSE: {best_mse[best_model
 
 # Save the best model to a file
 best_model_instance = models[best_model]
-joblib.dump(best_model_instance, "best_model.pkl")
+joblib.dump(best_model_instance, f"D:\\BAMI\\DeepLearning\\DeepLearningProject\\results\\{best_model}.pkl")
 
 # Plot the error graph
 model_errors = {model_name: [mean_squared_error(y_test, model.predict(X_test))] for model_name, model in models.items()}
