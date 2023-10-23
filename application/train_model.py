@@ -25,6 +25,7 @@ else:
 # Load your dataset
 data = pd.read_csv("D:\BAMI\DeepLearning\DeepLearningProject\dataset\data_normalized.csv")
 number_of_passes = 10
+validation_ratio = 0.3
 shuffled_data = shuffle(data)
 
 label_encoder = LabelEncoder()
@@ -39,7 +40,7 @@ X = shuffled_data.drop(['Global_Sales', 'Name'], axis=1)  # Exclude 'Name' and t
 Y = shuffled_data['Global_Sales']
 
 # Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.3, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=validation_ratio, random_state=42)
 
 # Define a dictionary to store models
 models = {
