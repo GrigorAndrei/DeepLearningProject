@@ -1,6 +1,9 @@
 # DeepLearningProject
 Deep learning project - Video games sales prediction using Keras and tensorflow
 
+### Dataset can be found here:
+https://www.kaggle.com/datasets/sidtwr/videogames-sales-dataset?select=Video_Games_Sales_as_at_22_Dec_2016.csv
+
 # Instructions
 
 ### To run this project you need to do the following:
