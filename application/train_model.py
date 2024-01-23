@@ -23,7 +23,7 @@ else:
     print("No GPU available, using CPU.")
 
 # Load your dataset
-data = pd.read_csv("D:\BAMI\DeepLearning\DeepLearningProject\dataset\data_normalized.csv")
+data = pd.read_csv(".\dataset\data_normalized.csv")
 number_of_passes = 10
 validation_ratio = 0.3
 shuffled_data = shuffle(data)
@@ -36,7 +36,9 @@ shuffled_data['Developer'] = label_encoder.fit_transform(shuffled_data['Develope
 shuffled_data['Rating'] = label_encoder.fit_transform(shuffled_data['Rating'])
 
 # Data preprocessing: Prepare X and y
-X = shuffled_data.drop(['Global_Sales', 'Name'], axis=1)  # Exclude 'Name' and the target
+# Excludes the fields that are irrelevant to training the model
+X = shuffled_data.drop(['Global_Sales', 'Name', 'NA_Sales', 'EU_Sales', 'JP_Sales', 'Other_Sales', 'Global_Sales'], axis=1)
+# Sets the target of the models
 Y = shuffled_data['Global_Sales']
 
 # Split the data into training and testing sets
@@ -48,11 +50,11 @@ models = {
     "Ridge Regression": Ridge(),
     "Lasso Regression": Lasso(),
     "Decision Tree": DecisionTreeRegressor(),
-    "Random Forest": RandomForestRegressor(n_estimators=100),
-    "Support Vector Machine": SVR(),
+    "Random Forest Regressor": RandomForestRegressor(n_estimators=100),
+    "Support Vector Regressor": SVR(),
     "Neural Network": MLPRegressor(random_state=42),
-    "XGBoost": XGBRegressor(),
-    "LightGBM": LGBMRegressor()
+    "XGBoost Regressor": XGBRegressor(),
+    "LightGBM Regressor": LGBMRegressor()
 }
 
 best_model = None
@@ -64,7 +66,7 @@ model_accuracies = {model_name: [] for model_name in models}  # Dictionary to st
 for model_name, model in models.items():
     
     for epoch in range(number_of_passes):
-        print(f"Currently training model {model_name}: on epoch number {epoch}")
+        print(f"Currently training model {model_name} on epoch number {epoch+1}")
         model_instance = model.fit(X_train, y_train)
         predictions = model_instance.predict(X_test)
         mse = mean_squared_error(y_test, predictions)
@@ -75,8 +77,8 @@ for model_name, model in models.items():
             best_model = model_name
 
 
-# Plot the development of accuracy over 100 passes
-# Plot the development of accuracy over 100 passes
+# Plot the development of accuracy over 10 passes
+# Plot the development of accuracy over 10 passes
 plt.figure(figsize=(15, 6))
 pass_numbers = list(range(number_of_passes))
 for model_name, accuracies in model_accuracies.items():
@@ -85,9 +87,9 @@ for model_name, accuracies in model_accuracies.items():
 plt.xlabel('Pass Number')
 plt.ylabel('Mean Squared Error (MSE)')
 plt.legend()
-plt.title(f'Development of Model Accuracy Over {number_of_passes} Passes')
+plt.title(f'Development of Model Accuracy Over {number_of_passes} Epochs')
 
-plt.savefig('D:\\BAMI\\DeepLearning\\DeepLearningProject\\results\\accuracy_plot.png')  # Save accuracy plot as PNG
+plt.savefig('.\\results\\accuracy_plot.png')  # Save accuracy plot as PNG
 
 # Find the best model
 best_mse = {model_name: min(accuracies) for model_name, accuracies in model_accuracies.items()}
@@ -96,7 +98,7 @@ print(f"The best model is {best_model} with the lowest MSE: {best_mse[best_model
 
 # Save the best model to a file
 best_model_instance = models[best_model]
-joblib.dump(best_model_instance, f"D:\\BAMI\\DeepLearning\\DeepLearningProject\\results\\{best_model}.pkl")
+joblib.dump(best_model_instance, f".\\results\\{best_model}.pkl")
 
 # Plot the error graph
 model_errors = {model_name: [mean_squared_error(y_test, model.predict(X_test))] for model_name, model in models.items()}
@@ -112,7 +114,7 @@ plt.xlabel('Mean Squared Error (MSE)')
 plt.title('Model Errors')
 
 # Save the graphs as JPEG or PNG files
-plt.savefig('D:\\BAMI\\DeepLearning\\DeepLearningProject\\results\\error_plot.png')     # Save error plot as PNG
+plt.savefig('.\\results\\error_plot.png')     # Save error plot as PNG
 
 # Save the best model to a file
 best_model_instance = models[best_model]

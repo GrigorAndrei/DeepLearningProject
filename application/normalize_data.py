@@ -3,8 +3,8 @@ import pandas as pd
 import os
 
 def normalize_data():
-    file_path = "D:\BAMI\DeepLearning\DeepLearningProject\dataset\Video_Games_Sales_as_at_22_Dec_2016.csv"
-    normalized_path = "D:\BAMI\DeepLearning\DeepLearningProject\dataset\data_normalized.csv"
+    file_path = ".\dataset\Video_Games_Sales_as_at_22_Dec_2016.csv"
+    normalized_path = ".\dataset\data_normalized.csv"
 
     if os.path.exists(normalized_path):
         # Delete the file
@@ -20,6 +20,8 @@ def normalize_data():
                         'JP_Sales','Other_Sales','Global_Sales',
                         'Critic_Score','Critic_Count','User_Score',
                         'User_Count','Developer','Rating']
+    
+    print("Creating normalized dataset")
 
     # Drop rows with missing values in any of the specified columns
     data = data.dropna(subset=columns_to_check)
@@ -29,7 +31,7 @@ def normalize_data():
 
 
 def clear_results():
-    folder_path = "D:\\BAMI\\DeepLearning\\DeepLearningProject\\results"
+    folder_path = "./results"
     if os.path.exists(folder_path):
         print(f"Results folder already exist.")
         print(f"Clearing previous results.")

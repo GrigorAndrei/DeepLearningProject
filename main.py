@@ -12,6 +12,7 @@ for file in files:
 # Loop through and run each Python file
 for file in files_path:
     try:
+        print("Now running: ", file)
         subprocess.run(["python", file], check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error running {file}: {e}")
